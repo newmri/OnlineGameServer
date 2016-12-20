@@ -1,0 +1,17 @@
+﻿  cSocket.cpp
+s:\kpu\3-winter\onlinegameserver\echo\echo\csocket.cpp(88): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+s:\kpu\3-winter\onlinegameserver\echo\echo\csocket.cpp(145): warning C4996: 'inet_addr': Use inet_pton() or InetPton() instead or define _WINSOCK_DEPRECATED_NO_WARNINGS to disable deprecated API warnings
+  c:\program files (x86)\windows kits\8.1\include\um\winsock2.h(1850): note: see declaration of 'inet_addr'
+s:\kpu\3-winter\onlinegameserver\echo\echo\csocket.cpp(158): warning C4996: 'strcmpi': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strcmpi. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(562): note: see declaration of 'strcmpi'
+  Generating Code...
+  Compiling...
+  echo.cpp
+s:\kpu\3-winter\onlinegameserver\echo\echo\echo.cpp(19): warning C4996: 'strcmpi': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strcmpi. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(562): note: see declaration of 'strcmpi'
+s:\kpu\3-winter\onlinegameserver\echo\echo\echo.cpp(26): warning C4996: 'strcmpi': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _strcmpi. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(562): note: see declaration of 'strcmpi'
+  Generating Code...
+  echo.vcxproj -> S:\KPU\3-Winter\OnlineGameServer\echo\Debug\echo.exe
+  echo.vcxproj -> S:\KPU\3-Winter\OnlineGameServer\echo\Debug\echo.pdb (Full PDB)
