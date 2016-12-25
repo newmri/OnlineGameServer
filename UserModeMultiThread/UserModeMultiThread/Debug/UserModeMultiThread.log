@@ -1,3 +1,2 @@
 ﻿  Source.cpp
-  UserModeMultiThread.vcxproj -> S:\KPU\3-Winter\OnlineGameServer\UserModeMultiThread\Debug\UserModeMultiThread.exe
-  UserModeMultiThread.vcxproj -> S:\KPU\3-Winter\OnlineGameServer\UserModeMultiThread\Debug\UserModeMultiThread.pdb (Full PDB)
+s:\kpu\3-winter\onlinegameserver\usermodemultithread\usermodemultithread\source.cpp : fatal error C1041: cannot open program database 'S:\KPU\3-Winter\OnlineGameServer\UserModeMultiThread\UserModeMultiThread\Debug\vc140.idb'; if multiple CL.EXE write to the same .PDB file, please use /FS
