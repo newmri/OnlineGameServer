@@ -2,6 +2,8 @@
     MICROSOFT FOUNDATION CLASS LIBRARY : AsyncSelect Project Overview
 ===============================================================================
 
+WSAAsyncSelect: 메시지 기반 I/O 모델,소켓에서 입출력이 일어나면 메시지로 알려줌, 윈도우 기반이라 성능이 떨어짐
+
 The application wizard has created this AsyncSelect application for
 you.  This application not only demonstrates the basics of using the Microsoft
 Foundation Classes but is also a starting point for writing your application.
