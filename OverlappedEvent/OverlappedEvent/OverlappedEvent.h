@@ -78,7 +78,7 @@ private:
 	// 작업 쓰레드 핸들
 	HANDLE m_hWorkerThread;
 	// 접속 쓰레드 핸들
-	HANDLE m_hAcceptThread;
+	HANDLE m_hAccepterThread;
 	// 작업 쓰레드 동작 플래그
 	bool m_bWorkerRun;
 	// 접속 쓰레드 동작 플래그

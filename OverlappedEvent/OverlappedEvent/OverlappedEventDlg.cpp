@@ -58,15 +58,44 @@ COverlappedEventDlg::COverlappedEventDlg(CWnd* pParent /*=NULL*/)
 void COverlappedEventDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_LIST1, m_ctOutput);
 }
 
 BEGIN_MESSAGE_MAP(COverlappedEventDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	//ON_MESSAGE(WM_SOCKETMSG, OnSocketMsg)
+	// AFX_MSG_MAP
+	ON_BN_CLICKED(ID_STARTSERVER, OnBnClickedStartserver)
 END_MESSAGE_MAP()
 
+// 출력 메세지
+void COverlappedEventDlg::OutputMsg(char* szOutputString, ...)
+{
+	char szOutStr[1024];
+	va_list argptr;
+	va_start(argptr, szOutputString);
+	vsprintf(szOutStr, szOutputString, argptr);
+	va_end(argptr);
+	m_ctOutput.SetCurSel(m_ctOutput.AddString(szOutStr));
 
+
+}
+void COverlappedEventDlg::OnBnClickedStartserver()
+{
+	// 소켓 메세지를 윈도우에 뿌리기 위해 현재 다이얼로그 포인터를 넘겨준다
+	m_OverlappedEvent.SetMainDlg(this);
+	// 소켓을 초기화
+	m_OverlappedEvent.InitSocket();
+	// 소켓과 주소를 연결, 등록
+	m_OverlappedEvent.BindandListen(8000);
+	//  서버 시작
+	m_OverlappedEvent.StartServer();
+
+
+
+}
 // COverlappedEventDlg message handlers
 
 BOOL COverlappedEventDlg::OnInitDialog()
