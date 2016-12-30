@@ -41,8 +41,8 @@ public:
 	// 메시지를 출력하기 위해 만든 리스트 박스 컨트롤
 	CListBox m_ctOutput;
 	// 소켓 버퍼
-	char m_szSocketBuf[1024];
-	// WSAAsuncSelect모델을 적용 시킨 클래스 변수
+	//char m_szSocketBuf[1024];
+	// WSAAsuncEvent모델을 적용 시킨 클래스 변수
 	cOverlappedEvent m_OverlappedEvent;
 	afx_msg void OnBnClickedStartserver();
 };

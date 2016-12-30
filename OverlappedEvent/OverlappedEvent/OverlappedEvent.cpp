@@ -62,7 +62,7 @@ cOverlappedEvent::cOverlappedEvent(void)
 	ZeroMemory(m_szSocketBuf, 1024);
 
 	// 클라 구조체 초기화
-	for (int i = 0; i < WSA_MAXIMUM_WAIT_EVENTS; ++i) {
+	for (int i = 0; i < WSA_MAXIMUM_WAIT_EVENTS; i++) {
 		m_stClientInfo.m_socketClient[i] = INVALID_SOCKET;
 		m_stClientInfo.m_eventHandle[i] = WSACreateEvent();
 		ZeroMemory(&m_stClientInfo.m_stOverlappedEx[i], sizeof(WSAOVERLAPPED));
@@ -122,6 +122,7 @@ void cOverlappedEvent::CloseSocket(SOCKET socketClose, bool bIsForce)
 
 	socketClose = INVALID_SOCKET;
 }
+
 bool cOverlappedEvent::BindandListen(int nBindPort)
 {
 	SOCKADDR_IN stServerAddr;
@@ -164,8 +165,8 @@ bool cOverlappedEvent::CreateWokerThread()
 bool cOverlappedEvent::CreateAccepterThread()
 {
 	unsigned int uiThreadId = 0;
-	m_hWorkerThread = (HANDLE)_beginthreadex(NULL, 0, &CallAccepterThread, this, CREATE_SUSPENDED, &uiThreadId);
-	if (m_hWorkerThread == NULL) {
+	m_hAccepterThread = (HANDLE)_beginthreadex(NULL, 0, &CallAccepterThread, this, CREATE_SUSPENDED, &uiThreadId);
+	if (m_hAccepterThread == NULL) {
 		m_pMainDlg->OutputMsg("AccepterThread Creation Failed: %u",GetLastError());
 		return false;
 	}
@@ -178,7 +179,7 @@ bool cOverlappedEvent::CreateAccepterThread()
 int cOverlappedEvent::GetEmptyIndex()
 {
 	// 0번째 배열은 정보 갱신용 이벤트
-	for (int i = 1; i < WSA_MAXIMUM_WAIT_EVENTS; ++i) {
+	for (int i = 1; i < WSA_MAXIMUM_WAIT_EVENTS; i++) {
 		if (INVALID_SOCKET == m_stClientInfo.m_socketClient[i])
 			return i;
 	}
@@ -213,7 +214,7 @@ bool cOverlappedEvent::BindRecv(int nIdx)
 	m_stClientInfo.m_stOverlappedEx[nIdx].m_eOperation = OP_RECV;
 	int nRet = WSARecv(m_stClientInfo.m_socketClient[nIdx], &(m_stClientInfo.m_stOverlappedEx[nIdx].m_wsaBuf), 1, &dwRecvNumBytes, &dwFlag,
 		(LPWSAOVERLAPPED)&(m_stClientInfo.m_stOverlappedEx[nIdx]), NULL);
-
+	
 	// socket_error이면 client socket이 끊어진걸로 처리
 	if (nRet == SOCKET_ERROR && (WSAGetLastError() != ERROR_IO_PENDING)) {
 		 m_pMainDlg->OutputMsg("[에러] WSARecv()함수 실패: %d",WSAGetLastError());
@@ -265,7 +266,6 @@ void cOverlappedEvent::AccepterThread()
 		m_stClientInfo.m_socketClient[nIdx] = accept(m_stClientInfo.m_socketClient[0], (SOCKADDR*)&stClientAddr, &nAddrLen);
 		if (INVALID_SOCKET == m_stClientInfo.m_socketClient[nIdx])
 			return;
-
 		bool bRet = BindRecv(nIdx);
 		if (false == bRet) return;
 		m_pMainDlg->OutputMsg("클라이언트 접속: IP(%s) SOCKET(%d)", inet_ntoa(stClientAddr.sin_addr),m_stClientInfo.m_socketClient[nIdx]);
@@ -281,7 +281,7 @@ void cOverlappedEvent::WokerThread()
 {
 	while (m_bWorkerRun) {
 		// 요청 Overlapped I/O  작업이 완료 됬는지 이벤트를 기다림
-		DWORD dwObjIdx = WSAWaitForMultipleEvents(WSA_MAXIMUM_WAIT_EVENTS, m_stClientInfo.m_eventHandle, FALSE, INFINITE, FALSE);
+		DWORD dwObjIdx = WSAWaitForMultipleEvents(WSA_MAXIMUM_WAIT_EVENTS, m_stClientInfo.m_eventHandle,FALSE, INFINITE, FALSE);
 		// 에러 발생
 		if (WSA_WAIT_FAILED == dwObjIdx) {
 			m_pMainDlg->OutputMsg("[에러] WSAWaitFOrMultiEvents 실패: %d", WSAGetLastError());
@@ -292,7 +292,7 @@ void cOverlappedEvent::WokerThread()
 		// 접속 들어옴
 		if (WSA_WAIT_EVENT_0 == dwObjIdx)
 			continue;
-
+		
 		// Overlapped I/O 결과 처리
 		OverlappedResult(dwObjIdx);
 	}
